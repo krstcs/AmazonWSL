@@ -1,5 +1,5 @@
-OUT_ZIP=AL2022.zip
-LNCR_EXE=AL2022.exe
+OUT_ZIP=AL2023.zip
+LNCR_EXE=AL2023.exe
 
 DLR=curl
 DLR_FLAGS=-L
@@ -38,7 +38,7 @@ rootfs: base.tar
 
 base.tar:
 	@echo -e '\e[1;31mExporting base.tar using docker...\e[m'
-	docker run --name amazonwsl library/amazonlinux:2022.0.20221207.4 /bin/bash -c "yum update -y; yum install -y net-tools util-linux-ng; yum clean all; rm -rf /var/cache/yum; pwconv; grpconv; chmod 0744 /etc/shadow; chmod 0744 /etc/gshadow;"
+	docker run --name amazonwsl library/amazonlinux:2023 /bin/bash -c "yum update -y; yum install -y net-tools util-linux-ng; yum clean all; rm -rf /var/cache/yum; pwconv; grpconv; chmod 0744 /etc/shadow; chmod 0744 /etc/gshadow;"
 	docker export --output=base.tar amazonwsl
 	docker rm -f amazonwsl
 
@@ -50,4 +50,4 @@ clean:
 	-rm rootfs.tar.gz
 	-sudo rm -r rootfs
 	-rm base.tar
-	-docker rmi amazonlinux:2022.0.20221207.4
+	-docker rmi amazonlinux:2023
