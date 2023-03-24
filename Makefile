@@ -38,7 +38,8 @@ rootfs: base.tar
 
 base.tar:
 	@echo -e '\e[1;31mExporting base.tar using docker...\e[m'
-	docker run --name amazonwsl library/amazonlinux:2023 /bin/bash -c "yum update -y; yum install -y net-tools util-linux-ng; yum clean all; rm -rf /var/cache/yum; pwconv; grpconv; chmod 0744 /etc/shadow; chmod 0744 /etc/gshadow;"
+	docker run --name amazonwsl library/amazonlinux:2023 \
+		/bin/bash -c "yum update -y; yum install -y iputils net-tools util-linux-ng java-17-amazon-corretto-headless zip unzip jq; yum clean all; rm -rf /var/cache/yum; pwconv; grpconv; chmod 0744 /etc/shadow; chmod 0744 /etc/gshadow; export JAVA_HOME=/usr/lib/jvm/jre-17-openjdk;"
 	docker export --output=base.tar amazonwsl
 	docker rm -f amazonwsl
 
